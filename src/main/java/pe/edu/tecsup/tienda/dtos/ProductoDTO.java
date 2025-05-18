@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class ProductoDTO {
 
     private Long id;
-    private Long categoria_id;
     private CategoriaDTO categoria;
     private String nombre;
     private String descripcion;

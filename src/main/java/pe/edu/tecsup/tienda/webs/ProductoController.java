@@ -81,9 +81,6 @@ public class ProductoController {
         producto.setCreado(LocalDateTime.now());
         producto.setEstado(1);
 
-        // FIX : Categoria fija
-        producto.setCategoria(categoriaService.findById(1L).get());
-
         productoService.save(producto);
 
         redirectAttrs.addFlashAttribute("message", "Registro guardado correctamente");
@@ -123,8 +120,6 @@ public class ProductoController {
             Files.copy(file.getInputStream(), Paths.get(STORAGEPATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
         }*/
 
-        // FIX : Categoria fija
-        producto.setCategoria(categoriaService.findById(1L).get());
 
         productoService.save(producto);
 
