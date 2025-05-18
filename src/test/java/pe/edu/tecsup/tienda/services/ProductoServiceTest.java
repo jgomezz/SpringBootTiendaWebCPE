@@ -75,7 +75,7 @@ class ProductoServiceTest {
         categoriaDTO.setId(1L);
 
         ProductoDTO productoDTO = new ProductoDTO();
-        productoDTO.setCategoriaDTO(categoriaDTO);
+        productoDTO.setCategoria(categoriaDTO);
         productoDTO.setNombre("AMD");
         productoDTO.setDescripcion("AMD X10");
         productoDTO.setPrecio(280.0);

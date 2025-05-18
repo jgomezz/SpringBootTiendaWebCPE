@@ -23,9 +23,9 @@ public class ProductoMapper {
         productoDTO.setStock(producto.getStock());
         productoDTO.setImagen_nombre(producto.getImagen_nombre());
         if (producto.getCategoria() != null )
-            productoDTO.setCategoriaDTO(this.categoriaMapper.mapToDTO(producto.getCategoria()));
+            productoDTO.setCategoria(this.categoriaMapper.mapToDTO(producto.getCategoria()));
         else
-            productoDTO.setCategoriaDTO(null);
+            productoDTO.setCategoria(null);
 
         return productoDTO;
 
@@ -39,7 +39,7 @@ public class ProductoMapper {
         producto.setPrecio(productoDTO.getPrecio());
         producto.setStock(productoDTO.getStock());
         producto.setImagen_nombre(productoDTO.getImagen_nombre());
-        producto.setCategoria(this.categoriaMapper.mapToEntity(productoDTO.getCategoriaDTO()));
+        producto.setCategoria(this.categoriaMapper.mapToEntity(productoDTO.getCategoria()));
         if (producto.getCreado() == null)
             producto.setCreado(LocalDateTime.now());
         producto.setEstado(1); // Active by default

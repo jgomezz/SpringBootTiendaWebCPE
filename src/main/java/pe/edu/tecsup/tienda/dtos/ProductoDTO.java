@@ -14,7 +14,7 @@ public class ProductoDTO {
 
     private Long id;
     private Long categoria_id;
-    private CategoriaDTO categoriaDTO;
+    private CategoriaDTO categoria;
     private String nombre;
     private String descripcion;
     private Double precio;
