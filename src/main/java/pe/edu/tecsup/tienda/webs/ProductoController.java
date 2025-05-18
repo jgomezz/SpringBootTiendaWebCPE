@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pe.edu.tecsup.tienda.dtos.CategoriaDTO;
 import pe.edu.tecsup.tienda.dtos.ProductoDTO;
+import pe.edu.tecsup.tienda.entities.Categoria;
 import pe.edu.tecsup.tienda.entities.Producto;
 import pe.edu.tecsup.tienda.services.CategoriaService;
 import pe.edu.tecsup.tienda.services.ProductoService;
@@ -90,5 +91,57 @@ public class ProductoController {
         return "redirect:/productos";
     }
 
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) throws Exception {
+        log.info("edit edit(id: " + id + ")");
+
+        List<CategoriaDTO> categorias = categoriaService.findAll();
+
+        model.addAttribute("categorias", categorias);
+
+        ProductoDTO producto = productoService.findById(id).get();
+
+        model.addAttribute("producto", producto);
+
+        return "productos/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("producto") ProductoDTO producto, Errors errors,
+                         @RequestParam("file") MultipartFile file,
+                         RedirectAttributes redirectAttrs) throws Exception{
+        log.info("call update(producto: " + producto + ")");
+
+        /*
+        if(file != null && !file.isEmpty()) {
+            String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            producto.setImagen_nombre(filename);
+            if(Files.notExists(Paths.get(STORAGEPATH))){
+                Files.createDirectories(Paths.get(STORAGEPATH));
+            }
+            Files.copy(file.getInputStream(), Paths.get(STORAGEPATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+        }*/
+
+        // FIX : Categoria fija
+        producto.setCategoria(categoriaService.findById(1L).get());
+
+        productoService.save(producto);
+
+        redirectAttrs.addFlashAttribute("message", "Registro guardado correctamente");
+
+        return "redirect:/productos";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttrs) throws Exception {
+        log.info("edit delete(id: " + id + ")");
+
+        productoService.deleteById(id);
+
+        redirectAttrs.addFlashAttribute("message", "Registro eliminado correctamente");
+
+        return "redirect:/productos";
+    }
 
 }
