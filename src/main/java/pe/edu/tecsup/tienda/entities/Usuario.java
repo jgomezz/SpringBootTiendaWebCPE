@@ -1,45 +1,79 @@
 package pe.edu.tecsup.tienda.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "roles_id")
-    private Role role;
-
+    private Rol rol;
     private String email;
     private String password;
+    private String nombres;
+    private String apellidos;
+    private String sexo;
+    private Date fecnacimiento;
+    private String telefono;
+    private String direccion;
+    private Integer estado;
 
-    @Column(name = "nombres")
-    private String name;
+    // Credentials
 
-    @Column(name = "apellidos")
-    private String lastName;
+    @Override
+    public String getPassword() {
+        return password;
+    }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
 
-    @Column(name = "sexo")
-    private String sex;
+    @Override
+    public String toString() {
+        return "Usuario [id=" + id + ", rol=" + rol + ", email=" + email + ", password=" + password + ", nombres="
+                + nombres + ", apellidos=" + apellidos + ", sexo=" + sexo + ", fecnacimiento=" + fecnacimiento
+                + ", telefono=" + telefono + ", direccion=" + direccion + ", estado=" + estado + "]";
+    }
 
-    @Column(name = "fecnacimiento")
-    private Date birthdate;
+    // Spring Security
 
-    @Column(name = "telefono")
-    private String phone;
-
-    @Column(name = "direccion")
-    private String address;
-
-    @Column(name = "estado")
-    private Integer state;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<Rol> authorities = new ArrayList<>();
+        authorities.add(this.rol);
+        return authorities;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // false: User account has expired
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // false: User account is locked
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // Change username field
+        return true; // false: User credentials have expired
+    }
+    @Override
+    public boolean isEnabled() {
+        return this.estado != null && this.estado == 1;
+    }
 }
