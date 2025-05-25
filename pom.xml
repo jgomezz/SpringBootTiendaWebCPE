@@ -75,7 +75,7 @@
 		<!-- WebJars Locator (required for version-less URLs) -->
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>webjars-locator</artifactId>
+			<artifactId>webjars-locator</artifactId>ß
 			<version>0.52</version>
 		</dependency>
 
@@ -113,10 +113,6 @@
 			<artifactId>popper.js</artifactId>
 			<version>2.11.7</version>
 		</dependency>
-
-
-
-
 
 		<!-- jQuery-UI (JavaScript library) -->
 		<dependency>
