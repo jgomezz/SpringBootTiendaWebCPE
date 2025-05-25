@@ -48,9 +48,18 @@
                         <td th:text="${producto.stock}"/>
                         <td></td>
                         <td class="text-left">
-                            <a th:href="@{/productos/show/} + ${producto.id}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Mostrar</a>
-                            <a th:href="@{/productos/edit/} + ${producto.id}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Editar</a>
-                            <a th:href="@{/productos/delete/} + ${producto.id}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Eliminar</a>
+                            <a th:href="@{/productos/show/} + ${producto.id}"
+                               class="btn btn-info btn-sm">
+                                    <i class="fa fa-eye"></i> Mostrar</a>
+                            <a th:href="@{/productos/edit/} + ${producto.id}"
+                               class="btn btn-warning btn-sm">
+                                    <i class="fa fa-edit"></i> Editar</a>
+                            <a href="#"
+                               class="btn btn-danger btn-sm delete-btn"
+                               th:data-delete-url="@{/productos/delete/} + ${producto.id}"
+                               th:data-product-name="${producto.nombre}">
+                                <i class="fa fa-trash"></i> Eliminar</a>
+
                         </td>
                     </tr>
                     </tbody>
@@ -60,6 +69,62 @@
                 <a th:href="@{/productos/create}" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo</a>
             </div>
         </div>
+
+
+
+        <!-- Bootstrap Modal for Confirmation Dialog -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">
+                            <i class="fa fa-exclamation-triangle text-warning"></i> Confirmar Eliminación
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro de que desea eliminar este producto?</p>
+                        <p class="text-muted" id="productInfo"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fa fa-times"></i> Cancelar
+                        </button>
+                        <a href="#" id="confirmDeleteBtn" class="btn btn-danger">
+                            <i class="fa fa-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // JavaScript to handle the delete button click and show the modal
+             document.addEventListener('DOMContentLoaded', function() {
+                 const deleteButtons = document.querySelectorAll('.delete-btn');
+                 deleteButtons.forEach(button => {
+                     button.addEventListener('click', function(e) {
+                         e.preventDefault();
+                         const deleteUrl = this.getAttribute('data-delete-url');
+                         const productName = this.getAttribute('data-product-name');
+                         showDeleteModal(this, productName, deleteUrl);
+                     });
+                 });
+             });
+
+             // Function to show the delete confirmation modal
+             function showDeleteModal(element, productName, deleteUrl) {
+                 const productInfo = document.getElementById('productInfo');
+                 const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+                 productInfo.textContent = `Producto: ${productName}`;
+                 confirmBtn.setAttribute('href', deleteUrl);
+
+                 const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                 modal.show();
+             }
+
+        </script>
 
     </th:block>
 
