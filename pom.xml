@@ -75,7 +75,7 @@
 		<!-- WebJars Locator (required for version-less URLs) -->
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>webjars-locator</artifactId>ß
+			<artifactId>webjars-locator</artifactId>
 			<version>0.52</version>
 		</dependency>
 

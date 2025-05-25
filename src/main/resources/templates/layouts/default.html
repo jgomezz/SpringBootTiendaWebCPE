@@ -35,14 +35,21 @@
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Categorías</a>
-                        <a class="dropdown-item" th:href="@{/productos}">Productos</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Reportes</a>
-                    </div>
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Mantenimiento
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/categorias}">Categorías</a></li>
+                        <li><a class="dropdown-item" th:href="@{/productos}">Productos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Reportes</a></li>
+                    </ul>
                 </li>
+
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
